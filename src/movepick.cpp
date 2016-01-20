@@ -234,8 +234,8 @@ void MovePicker::generate_next_stage() {
 /// a new pseudo legal move every time it is called, until there are no more moves
 /// left. It picks the move with the biggest value from a list of generated moves
 /// taking care not to return the ttMove if it has already been searched.
-
-Move MovePicker::next_move() {
+template<>
+Move MovePicker::next_move<false>() {
 
   Move move;
 
@@ -316,3 +316,10 @@ Move MovePicker::next_move() {
       }
   }
 }
+
+
+/// Version of next_move() to use at split point nodes where the move is grabbed
+/// from the split point's shared MovePicker object. This function is not thread
+/// safe so must be lock protected by the caller.
+template<>
+Move MovePicker::next_move<true>() { return ss->splitPoint->movePicker->next_move<false>(); }

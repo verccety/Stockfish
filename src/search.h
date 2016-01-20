@@ -85,7 +85,6 @@ struct LimitsType {
   std::vector<Move> searchmoves;
   int time[COLOR_NB], inc[COLOR_NB], npmsec, movestogo, depth, movetime, mate, infinite, ponder;
   int64_t nodes;
-  TimePoint startTime;
 };
 
 /// The SignalsType struct stores atomic flags updated during the search
@@ -99,11 +98,19 @@ typedef std::unique_ptr<std::stack<StateInfo>> StateStackPtr;
 
 extern SignalsType Signals;
 extern LimitsType Limits;
+extern RootMoveVector RootMoves;
+extern Position RootPos;
 extern StateStackPtr SetupStates;
 
 void init();
+<<<<<<< HEAD
 void clear();
 template<bool Root = true> uint64_t perft(Position& pos, Depth depth);
+=======
+void think();
+void reset();
+template<bool Root> uint64_t perft(Position& pos, Depth depth);
+>>>>>>> parent of ecc5ff6... Lazy SMP
 
 } // namespace Search
 

@@ -81,7 +81,7 @@ namespace {
 ///  inc >  0 && movestogo == 0 means: x basetime + z increment
 ///  inc >  0 && movestogo != 0 means: x moves in y minutes + z increment
 
-void TimeManagement::init(Search::LimitsType& limits, Color us, int ply)
+void TimeManagement::init(Search::LimitsType& limits, Color us, int ply, TimePoint now)
 {
   int minThinkingTime = Options["Minimum Thinking Time"];
   int moveOverhead    = Options["Move Overhead"];
@@ -103,7 +103,7 @@ void TimeManagement::init(Search::LimitsType& limits, Color us, int ply)
       limits.npmsec = npmsec;
   }
 
-  startTime = limits.startTime;
+  start = now;
   unstablePvFactor = 1;
   optimumTime = maximumTime = std::max(limits.time[us], minThinkingTime);
 
